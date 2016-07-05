@@ -101,11 +101,13 @@ partup:newrelic
 partup:server
 pauli:accounts-linkedin
 peerlibrary:aws-sdk
+perak:markdown
 percolate:intercom
 percolate:migrations
 percolate:synced-cron
 practicalmeteor:chai
 practicalmeteor:mocha
+q42:autoform-markdown
 random
 reactive-var
 reload

@@ -4,7 +4,9 @@
             <div class="pu-sub-validations">
                 <span class="pu-sub-input">
                     <div class="pu-message {{#if hasUploadedMedia }}pu-message-haspictures{{/ if}}">
+
                         {{> afFieldInput name="text" data-message-input="" placeholder=placeholders.text class="pu-textarea" rows=3 autofocus=""}}
+
                         {{#if hasUploadedMedia}}
                             <ul class="pu-sub-photos">
                                 {{#each uploadedPhotos}}
@@ -47,7 +49,7 @@
                         <span>{{_ 'pages-app-partup-updates-newmessage-submit'}}</span>
                     {{/if}}
                     {{> Spinner color='inverted' type='small' }}
-                </button>
+                </button>ZZZ <!-- TODO: Remove this -->
             </div>
             <div class="cell stretch">
                 <a class=" pu-button pu-button-text pu-button-text-subtle"

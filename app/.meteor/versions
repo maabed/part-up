@@ -165,6 +165,7 @@ pauli:accounts-linkedin@1.3.1
 pauli:linkedin@1.3.1
 peerlibrary:aws-sdk@2.2.42_1
 peerlibrary:blocking@0.5.2
+perak:markdown@1.0.5
 percolate:intercom@1.4.2
 percolate:migrations@0.9.8
 percolate:synced-cron@1.3.2
@@ -175,6 +176,7 @@ practicalmeteor:mocha@2.4.5_4
 practicalmeteor:mocha-core@1.0.0
 practicalmeteor:sinon@1.14.1_2
 promise@0.6.7
+q42:autoform-markdown@1.0.0
 raix:eventemitter@0.1.3
 random@1.0.9
 rate-limit@1.0.4
