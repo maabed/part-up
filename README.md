@@ -93,9 +93,6 @@ The whole app is made up of small styled components. These components are not fu
 - Find faulty / wrongly uploaded pictures: `db.getCollection('cfs.images.filerecord').find({'copies':{$exists:false}})`
 - Overwrite the language of a specific part-up: `db.getCollection('partups').find({'_id':'<<partupid>>'},{$set: {'language':'nl'}});`
 
-## Unit testing
-- `meteor run --test`
-
 ## Required server environment variables
 ```
 NODE_ENV
