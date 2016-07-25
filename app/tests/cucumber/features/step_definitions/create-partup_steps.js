@@ -1,54 +1,57 @@
-// (function() {
-//     'use strict';
-//
-//     var assert = require('assert');
-//
-//     module.exports = function() {
-//
-//         // You can use normal require here, cucumber is NOT run in a Meteor context (by design)
-//         var url = require('url');
-//
-//         this.Given(/^I am loggedin$/, function(callback) {
-//             // Write code here that turns the phrase above into concrete actions
-//             this.browser. // this.browser is a pre-configured WebdriverIO + PhantomJS instance
-//                 url(url.resolve(process.env.HOST, '/login')).
-//                 waitForExist('body *').
-//                 waitForVisible('body *').
-//                 setValue('[name="email"]', 'user@example.com').
-//                 setValue('[name="password"]', 'user').
-//                 click('[type=submit]').
-//                 call(callback);
-//         });
-//
-//         this.When(/^I click through the introduction page$/, function(callback) {
-//             this.browser.
-//             waitForExist('.pu-button-arrow').
-//             click('.pu-button-arrow').
-//             call(callback);
-//         });
-//
-//         this.When(/^I enter the partup details$/, function(callback) {
-//             this.browser.
-//             waitForExist('body *', 7000).
-//             waitForVisible('body *').
-//             setValue('[name="name"]', 'Organise Testing Party').
-//             setValue('textarea', 'a nice testing party description').
-//             setValue('.bootstrap-tagsinput input', 'testing').
-//             setValue('[data-schema-key="end_date"]', 'Thu Jul 23 2050 02:00:00 GMT+0200 (CEST)').
-//             setValue('[data-locationautocomplete]', 'Ams').
-//             waitForExist('.tt-suggestion', 5000).
-//             click('.tt-suggestion').
-//             click('[type=submit]').
-//             call(callback);
-//         });
-//
-//         this.When(/^I should be on the start activities screen$/, function(callback) {
-//             callback.pending();
-//             // return this.browser.
-//             // waitForExist('body *').
-//             // waitForVisible('body *').
-//             // getText('h2').should.eventually.contain('Step 2. Define the activities');
-//         });
-//     };
-//
-// })();
+module.exports = function () {
+
+  this.Given(/^I am loggedin and I navigate to \"\/start\/details\"$/, function () {
+    browser.cookie('post', {name: 'cb-enabled', value: 'enabled'});
+    browser.url(process.env.ROOT_URL + '/login');
+    browser.element('[name="email"], [name="password"]').waitForExist();
+    browser.setValue('[name="email"]', 'user@example.com');
+    browser.setValue('[name="password"]', 'user');
+    browser.click('[type=submit]');
+
+    browser.waitForExist('.pu-sub-nav', 1000);
+
+    browser.url(process.env.ROOT_URL + '/start/details');
+    browser.waitForExist('#createPartupForm');
+  });
+
+
+  this.When(/^I enter the partup details$/, function () {
+
+    browser.setValue('[name="partup_name"]', 'Organise Testing Party')
+      .setValue('textarea', 'a nice testing party description')
+      .setValue('.bootstrap-tagsinput input', 'testing');
+    browser.element('body').keys('\uE004');
+    browser.element('body').keys('\uE00D');
+    browser.element('.day:not(.disabled):last-child').click();
+    browser.element('body').keys('\uE004');
+    browser.setValue('.pu-input.typeahead.tt-input', 'Den Ha');
+    browser.waitForVisible('.tt-menu');
+    browser.element('.tt-selectable').click();
+    browser.element('body').keys('\uE004');
+    browser.element('body').keys('\uE004');
+    browser.element('body').keys('\uE004');
+    browser.element('body').keys('\uE00D');
+
+    browser.element('body').keys('\uE004');
+    browser.element('body').keys('\uE004');
+    browser.element('body').keys('\uE00D');
+
+    browser.waitForVisible('.lfy-focuspoint-button', 10000);
+    browser.element('.pu-button.pu-button-arrow').click();
+
+    // browser.waitForExist('.pu-activity-form', 1000);
+    //
+    // browser.element('.pu-button.pu-button-arrow').click();
+    //
+    // browser.waitForExist('.pu-composition-startpartup-promote');
+    //
+    // browser.element('.pu-button.pu-button-arrow').click();
+
+  });
+
+  this.Then(/^I should be on the start activities screen$/, function () {
+    // expect(browser.getText('.pu-partupheader h1')).toBe('Organise Testing Party');
+    expect(browser.element('.pu-activity-form')).toBeDefined();
+  });
+};
+

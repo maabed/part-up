@@ -4,7 +4,7 @@ Business Need:
 
   Feature: Cookiebar
   As a user
-  I want to have the posibilty to acknowledge the cookie policy
+  I want to have the possibility to acknowledge the cookie policy
   So that I can continue to use the site without any doubt about the part-up website usage data
 
   Scenario: I can acknowledge the cookie policy
