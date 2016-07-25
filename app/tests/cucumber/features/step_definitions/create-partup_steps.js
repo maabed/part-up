@@ -1,8 +1,8 @@
 module.exports = function () {
 
   this.Given(/^I am loggedin and I navigate to \"\/start\/details\"$/, function () {
-    browser.cookie('post', {name: 'cb-enabled', value: 'enabled'});
     browser.url(process.env.ROOT_URL + '/login');
+    browser.cookie('post', {name: 'cb-enabled', value: 'enabled'});
     browser.element('[name="email"], [name="password"]').waitForExist();
     browser.setValue('[name="email"]', 'user@example.com');
     browser.setValue('[name="password"]', 'user');
@@ -38,20 +38,21 @@ module.exports = function () {
 
     browser.waitForVisible('.lfy-focuspoint-button', 10000);
     browser.element('.pu-button.pu-button-arrow').click();
-
-    // browser.waitForExist('.pu-activity-form', 1000);
-    //
-    // browser.element('.pu-button.pu-button-arrow').click();
-    //
-    // browser.waitForExist('.pu-composition-startpartup-promote');
-    //
-    // browser.element('.pu-button.pu-button-arrow').click();
-
   });
 
   this.Then(/^I should be on the start activities screen$/, function () {
-    // expect(browser.getText('.pu-partupheader h1')).toBe('Organise Testing Party');
     expect(browser.element('.pu-activity-form')).toBeDefined();
+  });
+
+  this.After(function(scenario, callback) {
+    var createdPartupId = browser.getUrl().match(/(\w)+(?=\/activities)/)[0];
+    var deleteCreatedPartup = function (_createdPartupId) {
+      return Partups.remove(_createdPartupId);
+    };
+    server.execute(deleteCreatedPartup, createdPartupId);
+
+    callback();
+
   });
 };
 
