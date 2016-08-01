@@ -12,6 +12,12 @@ Template.ChatView.onCreated(function() {
     template.userIsAtScrollBottom = true;
     template.focussed = true;
 
+    if (template.data.config.reactiveBottomBarHeight) {
+        template.data.config.reactiveBottomBarHeight.equalsFunc = function(a, b) {
+            template.instantlyScrollToBottom();
+        };
+    }
+
     template.init = function() {
         Partup.client.chat.initialize(template);
         start();
@@ -359,6 +365,9 @@ Template.ChatView.helpers({
             },
             placeholderText: function() {
                 return template.data.config.placeholderText;
+            },
+            bottomOffset: function() {
+                return template.data.config.reactiveBottomBarHeight.get();
             }
         };
     },

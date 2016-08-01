@@ -1,5 +1,5 @@
 <template name="ChatView">
-    <article class="pu-chat-wrapper {{#if state.fullyLoaded}}pu-state-active{{/if}}" data-reversed-scroller-wrapper>
+    <article class="pu-chat-wrapper {{#if state.fullyLoaded}}pu-state-active{{/if}}" data-reversed-scroller-wrapper style="bottom: {{state.bottomOffset}}px;">
         <!-- Top new messages button -->
         {{#if data.messages.new.length}}{{#if state.overscroll}}
             <p class="pu-textline pu-textline-colour pu-textline-hover">

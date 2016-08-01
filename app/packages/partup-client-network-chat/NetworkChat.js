@@ -7,6 +7,7 @@ Template.NetworkChat.onCreated(function() {
     template.LIMIT = 50;
     template.SEARCH_LIMIT = 50;
     template.initialized = new ReactiveVar(false);
+    template.bottomBarHeight = new ReactiveVar(68);
     // template.sendingMessage = new ReactiveVar(false);
 
     var initialize = function(chat_id) {
@@ -123,12 +124,14 @@ Template.NetworkChat.helpers({
                     onNewMessagesViewed: template.resetUnreadMessagesIndicatorBadge,
                     reactiveMessages: template.reactiveMessages,
                     reactiveHighlight:  template.searchQuery,
-                    placeholderText: TAPi18n.__('pages-app-network-chat-empty-placeholder')
+                    placeholderText: TAPi18n.__('pages-app-network-chat-empty-placeholder'),
+                    reactiveBottomBarHeight: template.bottomBarHeight
                 };
             },
             bottomBar: function() {
                 return {
-                    chatId: network.chat_id
+                    chatId: network.chat_id,
+                    reactiveBottomBarHeight: template.bottomBarHeight
                 };
             },
             sideBar: function() {

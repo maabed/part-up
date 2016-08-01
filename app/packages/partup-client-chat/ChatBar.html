@@ -1,9 +1,9 @@
 <template name="ChatBar">
-    <footer>
+    <footer data-bar>
         <label class="pu-formfield">
             <div class="pu-sub-tablecell-input">
                 <span class="pu-sub-input">
-                    <input class="pu-input form-control" data-submit="return" data-messageinput type="text" name="partup_name" placeholder="{{_ 'pages-app-network-chat-placeholder' }}" autocomplete="off" autofocus>
+                    <textarea rows="{{ rows }}" class="form-control pu-textarea pu-textarea-grow " data-submit="return" data-messageinput type="text" name="partup_name" placeholder="{{_ 'pages-app-network-chat-placeholder' }}" autocomplete="off" autofocus></textarea>
                 </span>
                 <span class="pu-sub-error"></span>
             </div>

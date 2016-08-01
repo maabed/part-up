@@ -4,6 +4,7 @@ var continueOnCreated = function(chatId) {
     template.clearMessageInput = function() {
         $('[data-messageinput]')[0].value = '';
     };
+    template.rows = new ReactiveVar(1);
 
     // typing
     var isTyping = false;
@@ -40,6 +41,12 @@ var continueOnCreated = function(chatId) {
             Partup.client.chat.onNewMessageRender(Partup.client.chat.instantlyScrollToBottom);
         });
     };
+
+    template.ajustHeight = function() {
+        _.defer(function() {
+            template.data.config.reactiveBottomBarHeight.set($('[data-bar]').outerHeight(true));
+        });
+    };
 };
 
 Template.ChatBar.onCreated(function() {
@@ -61,6 +68,12 @@ Template.ChatBar.onRendered(function() {
     if (template.data.config.chatId) $('[data-messageinput]').focus();
 });
 
+Template.ChatBar.helpers({
+    rows: function() {
+        return Template.instance().rows.get();
+    }
+});
+
 Template.ChatBar.events({
     'keydown [data-submit=return]': function(event, template) {
         if (!template.chatId) return;
@@ -73,9 +86,21 @@ Template.ChatBar.events({
             event.preventDefault();
             template.sendMessage($('[data-messageinput]').val());
             return false;
+        } else if (pressedKey == 13 && event.shiftKey) {
+            template.rows.set(template.rows.curValue + 1);
         } else {
+            _.defer(function() {
+                if (!$('[data-messageinput]').val().split(' ').join('')) template.rows.set(1);
+            });
             template.throttledEnableTypingState();
         }
+    },
+    'keyup [data-submit=return]': function(event, template) {
+        var pressedKey = event.which ? event.which : event.keyCode;
+        if (pressedKey == 13 && !event.shiftKey) {
+            template.rows.set(1);
+        }
+        template.ajustHeight();
     },
     'click [data-send]': function(event, template) {
         if (!template.chatId) return;
