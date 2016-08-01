@@ -44,7 +44,8 @@ Template.app_profile_partners.onCreated(function() {
             var descriptionLines = Math.ceil(descriptionLength / descriptionCharsPerLine);
             var description = descriptionLines * DESCRIPTION_LINEHEIGHT;
             return BASE_HEIGHT + MARGIN + name + description;
-        }
+        },
+        columns: getAmountOfColumns(Partup.client.screen.size.get('width'))
 
     });
 

@@ -29,7 +29,8 @@ Template.app_network_uppers.onCreated(function() {
             // as possible, synchronously,
             // using the given upper object
             return 500;
-        }
+        },
+        columns: getAmountOfColumns(Partup.client.screen.size.get('width'))
     });
 
     template.initialize = function(filter, searchQuery) {

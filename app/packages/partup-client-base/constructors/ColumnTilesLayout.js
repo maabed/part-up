@@ -20,6 +20,7 @@ Partup.client.constructors.ColumnTilesLayout = function(options) {
     var _columnElements = [];
 
     var _measureColumnHeights = function() {
+        _columnElements = C._template.$('[data-column]');
         if (!_columnElements || !_columnElements.length) {
             throw new Error('ColumnTilesLayout: could not find any columns');
         }
@@ -33,9 +34,15 @@ Partup.client.constructors.ColumnTilesLayout = function(options) {
         return heights;
     };
 
-    C.columns = new ReactiveVar([]);
+    var initialColumns = [];
+    _.times(_options.columns, function() {
+        initialColumns.push([]);
+    });
+
+    C.columns = new ReactiveVar(initialColumns);
 
     C.clear = function(cb) {
+        if (!_columnElements || !_columnElements.length) return;
         _tiles = [];
 
         // Create array of arrays
@@ -70,7 +77,6 @@ Partup.client.constructors.ColumnTilesLayout = function(options) {
                 columnHeights[shortestColumn] += tileHeight;
                 columns[shortestColumn].push(tile);
             });
-
             C.columns.set(columns);
 
             if (mout.lang.isFunction(cb)) {
