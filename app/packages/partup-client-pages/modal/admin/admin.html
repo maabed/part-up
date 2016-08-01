@@ -7,7 +7,7 @@
         </a>
     </nav>
 
-    <article class="pu-page">
+    <article class="pu-page pu-page--admin">
         <div class="pu-sub-pagecontent">
             <div class="pu-sub-fixedmodalsidebar">
                 <div class="pu-wrap pu-wrap-modal">
@@ -15,11 +15,14 @@
                         <li class="{{# if isActiveRoute name='admin-overview' }}pu-state-active{{/ if }}">
                             <a href="{{ pathFor 'admin-overview' }}">{{_ 'pages-modal-admin-overview' }}</a>
                         </li>
-                        <li class="{{# if isActiveRoute name='admin-createtribe' }}pu-state-active{{/ if }}">
-                            <a href="{{ pathFor 'admin-createtribe' }}">{{_ 'pages-modal-admin-createtribe' }}</a>
+                        <li class="{{# if isActiveRoute name='admin-featured-networks' }}pu-state-active{{/ if }}">
+                            <a href="{{ pathFor 'admin-featured-networks' }}">Partups</a>
                         </li>
                         <li class="{{# if isActiveRoute name='admin-featured-partups' }}pu-state-active{{/ if }}">
                             <a href="{{ pathFor 'admin-featured-partups' }}">{{_ 'pages-modal-admin-featured-partups' }}</a>
+                        </li>
+                        <li class="{{# if isActiveRoute name='admin-createtribe' }}pu-state-active{{/ if }}">
+                            <a href="{{ pathFor 'admin-createtribe' }}">{{_ 'pages-modal-admin-createtribe' }}</a>
                         </li>
                         <li class="{{# if isActiveRoute name='admin-featured-networks' }}pu-state-active{{/ if }}">
                             <a href="{{ pathFor 'admin-featured-networks' }}">{{_ 'pages-modal-admin-featured-networks' }}</a>

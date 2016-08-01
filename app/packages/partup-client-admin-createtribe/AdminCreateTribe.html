@@ -1,11 +1,11 @@
 <template name="AdminCreateTribe">
 
     <h2>Create Tribe</h2>
-    {{#autoForm schema=Partup.schemas.forms.networkCreate id="createNetworkForm" class="pu-form" validation="submitThenBlur" }}
+    {{#autoForm schema=Partup.schemas.forms.networkCreate id="createNetworkForm" class="pu-form pu-block pu-block-highlighted" validation="submitThenBlur" }}
         <!-- Name -->
         <label class="pu-formfield">
             <span class="pu-label">
-                Network name
+                Tribe name
             </span>
 
             <div class="pu-sub-validations {{#if afFieldIsInvalid name='name' }}pu-state-invalid{{/if}}">
@@ -18,7 +18,7 @@
         <!-- network type -->
         <label class="pu-formfield">
             <span class="pu-label">
-                Network type
+                Tribe type
             </span>
 
             <div class="pu-sub-validations {{#if afFieldIsInvalid name='name' }}pu-state-invalid{{/if}}">

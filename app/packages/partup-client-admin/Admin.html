@@ -36,37 +36,47 @@
             <input data-usersearchfield placeholder="search for user name"/>
             <button data-search>search</button>
         </form>
-        <br/>
-        <table style="width:900px">
-            <thead>
-                <tr>
-                    <td>Naam</td>
-                    <td>id</td>
-                    <td>email</td>
-                    <td>telefoon</td>
-                    <td>aangemeld op</td>
-                    <td>acties</td>
-                </tr>
-            </thead>
+        <ul class="pu-list pu-list-lineseparated pu-list-admin">
+            <li>
+                <p class="pu-sub-upperinfo">
+                    <a href="#" class="pu-sub-name">Naam</a>
+                    <span class="pu-sub-id">ID</span>
+                    <span class="pu-sub-mail">Email</span>
+                    <span class="pu-sub-status">Telefoon</span>
+                    <span class="pu-sub-date">Aangemeld</span>
+                </p>
+            </li>
             {{# each users }}
-                <tr>
-                    <td><a href="{{ pathFor route='profile' _id=_id }}">{{profile.name}}</a></td>
-                    <td>{{_id}}</td>
-                    <td>{{getMail . }}</td>
-                    <td>{{profile.phonenumber}}</td>
-                    <td>{{partupDateCustom createdAt 'DD-MM-YYYY'}}</td>
-                    <td>
-                        <a href="#" data-impersonate-user>login</a>
-                        -
-                        {{#if isUserActive . }}
-                            <a href="#" data-deactivate-user>deactivate</a>
-                        {{else}}
-                            <a href="#" data-reactivate-user>reactivate</a>
+                <li>
+                    <p class="pu-sub-upperinfo">
+                        <a href="{{ pathFor route='profile' _id=_id }}" class="pu-sub-name">{{profile.name}}</a>
+                        <span class="pu-sub-id">{{_id}}</span>
+                        <span class="pu-sub-mail">{{getMail . }}</span>
+                        <span class="pu-sub-date">{{partupDateCustom createdAt 'DD-MM-YY'}}</span>
+                        {{#if profile.phonenumber}}
+                            <span class="pu-sub-status">{{profile.phonenumber}}</span>
                         {{/if}}
-                    </td>
-                </tr>
-            {{/each }}
-        </table>
+                    </p>
+                    <button type="button" class="pu-sub-settings pu-button pu-button-checkmark" data-toggle><i class="picon-cog"></i></button>
+                    <div class="pu-uppersettings" data-toggle-target>
+                        <ul class="pu-list">
+                            {{#if isUserActive . }}
+                                <li class="pu-dropdownitem pu-dropdownitem-small pu-sub-delete">
+                                    <button data-deactivate-user>deactivate</button>
+                                </li>
+                            {{else}}
+                                <li class="pu-dropdownitem pu-dropdownitem-small">
+                                    <button data-deactivate-user>reactivate</button>
+                                </li>
+                            {{/if}}
+                            <li class="pu-dropdownitem pu-dropdownitem-small">
+                                <button data-impersonate-user>impersonate</button>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            {{/each}}
+        </ul>
         <button data-showmore>show more</button>
     </div>
 </template>

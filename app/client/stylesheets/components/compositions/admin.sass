@@ -1,0 +1,114 @@
+.pu-page--admin
+
+    .pu-sub-fixedmodalsidebar
+        right: 0
+        left: 0
+        z-index: 9
+
+        .pu-wrap.pu-wrap-modal .pu-modalsidebar
+            right: 0px
+            left: 0px
+            top: 0px
+            background-color: #fff
+            width: 100%
+            padding-left: 40px
+
+            > li
+                display: inline-block
+                margin-right: 20px
+                margin-bottom: 0
+
+                > a
+                    padding-top: 10px
+                    padding-bottom: 10px
+                    display: block
+
+    .pu-wrap-modal
+        max-width: 1042px
+
+    .pu-sub-pagecontent
+        padding-top: 60px
+
+    .pu-composition > .pu-list
+        margin-top: 15px
+
+    .pu-list-admin
+        .pu-sub-upperinfo
+            height: 40px
+
+        .pu-sub-name
+            position: absolute
+            top: 10px
+            left: 8%
+            color: $color-text
+            text-decoration: none
+            font-weight: bold
+            width: 27%
+            white-space: nowrap
+            overflow: hidden
+            text-overflow: ellipsis
+            transition: width .2s
+            background-color: #fff
+            &:hover
+                width: auto
+                padding-right: 15px
+                z-index: 9
+
+
+        .pu-sub-mail
+            position: absolute
+            top: 10px
+            left: 35%
+
+        .pu-sub-id
+            position: absolute
+            top: 10px
+            left: 5px
+            width: 50px
+            overflow: hidden
+            white-space: nowrap
+            text-overflow: ellipsis
+            background-color: #fff
+            transition: width .2s
+
+            &:hover
+                width: auto
+                padding-right: 15px
+                z-index: 9
+
+        .pu-sub-date
+            position: absolute
+            left: 89%
+            top: 10px
+
+        .pu-sub-status
+            color: $color-primary
+            position: absolute
+            top: 10px
+            left: 75%
+            font-weight: bold
+            background-color: #fff
+            padding-left: 5px
+
+        .pu-uppersettings
+            position: absolute
+            display: none
+            top: 52px
+            right: 0
+            border: 2px solid #eeeeee
+            border-radius: 5px
+            background-color: #ffffff
+            z-index: 1
+
+            .pu-sub-delete
+                button, a
+                    color: $color-alert-error
+
+            &.pu-state-active
+                display: block
+
+            .pu-dropdownitem
+                border-bottom: 2px solid #eee
+
+                &:last-child
+                    border-bottom: 0
