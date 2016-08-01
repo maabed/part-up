@@ -16,7 +16,9 @@
                                 <p class="pu-highlighttext">
                                     {{#with partupSanitize content}}
                                         {{#with partupHighlight . data.highlight }}
-                                            {{{ partupAutolink . }}}
+                                            {{#with partupAutolink . }}
+                                                {{{ partupLineBreakToBr . }}}
+                                            {{/with}}
                                         {{/with}}
                                     {{/with}}
                                 </p>
