@@ -302,23 +302,6 @@ Meteor.methods({
     },
 
     /**
-     * Increase email share count
-     *
-     * @param {String} partupId
-     */
-    'partups.increase_email_share_count': function(partupId) {
-        check(partupId, String);
-
-        try {
-            var partup = Partups.findOneOrFail(partupId);
-            partup.increaseEmailShareCount();
-        } catch (error) {
-            Log.error(error);
-            throw new Meteor.Error(400, 'partup_email_share_count_could_not_be_updated');
-        }
-    },
-
-    /**
      * Invite an existing upper to a partup
      *
      * @param {string} partupId

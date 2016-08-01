@@ -138,9 +138,6 @@ Event.on('invites.inserted.partup.by_email', function(inviter, partup, email, na
         Updates.insert(update);
     }
 
-    // Update stats
-    partup.increaseEmailShareCount();
-
     // Save the access token to the partup to allow access
     Partups.update(partup._id, {$addToSet: {access_tokens: accessToken}});
 });

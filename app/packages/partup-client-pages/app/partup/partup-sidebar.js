@@ -247,11 +247,6 @@ Template.app_partup_sidebar.events({
         var subject = '';
         var shareUrl = Partup.client.socials.generateMailShareUrl(subject, body);
         window.location.href = shareUrl;
-
-        Meteor.call('partups.increase_email_share_count', partup._id);
-        analytics.track('partup share mail', {
-            partupId: partup._id,
-        });
     },
 
     'click [data-open-takepart-popup]': function(event, template) {
