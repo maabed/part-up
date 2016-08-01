@@ -27,6 +27,11 @@ var NETWORK_CLOSED = 5;
  * @memberof Partups
  * @private
  */
+var NETWORK_ADMINS = 6;
+/**
+ * @memberof Partups
+ * @private
+ */
 var TYPE = {
     CHARITY: 'charity',
     ENTERPRISING: 'enterprising',
@@ -143,13 +148,13 @@ Partup.prototype.hasInvitedUpper = function(userId) {
 Partup.prototype.isViewableByUser = function(userId, accessToken) {
     if (this.privacy_type === PUBLIC) return true;
     if (this.privacy_type === NETWORK_PUBLIC) return true;
+    var user = Meteor.users.findOne(userId);
+    if (this.privacy_type === NETWORK_ADMINS && User(user).isAdminOfNetwork(this.network_id)) return true;
     if (this.privacy_type === PRIVATE || this.privacy_type === NETWORK_INVITE || this.privacy_type === NETWORK_CLOSED) {
         var accessTokens = this.access_tokens || [];
         if (accessTokens.indexOf(accessToken) > -1) return true;
 
-        var user = Meteor.users.findOne(userId);
         if (!user) return false;
-
         var networks = user.networks || [];
         if (networks.indexOf(this.network_id) > -1) return true;
 

@@ -452,6 +452,16 @@ User = function(user) {
         },
 
         /**
+         * Check if user is admin of a specific tribe
+         *
+         * @return {Boolean}
+         */
+        isAdminOfNetwork: function(networkId) {
+            if (!user) return false;
+            return !!Networks.findOne({_id: networkId, admins: {$in: [user._id]}});
+        },
+
+        /**
          * Check if user is admin of a swarm
          *
          * @return {Boolean}
