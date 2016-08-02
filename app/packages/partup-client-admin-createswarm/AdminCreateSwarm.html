@@ -38,7 +38,7 @@
                 <p class="pu-sub-info">
                     <span class="pu-sub-id">{{ _id }}</span>
                     <a href="{{pathFor route='swarm' glug=slug }}" class="pu-sub-name">{{ name }}</a>
-                    <span class="pu-sub-content">{{ description }}</span>
+                    <span class="pu-sub-content" data-expand>{{ description }}</span>
                     <a data-hovercontainer="HoverContainer_upper" data-hovercontainer-context="{{ getSwarmAdmin._id }}" class="pu-sub-highlight">{{ getSwarmAdmin.profile.name }}</a>
                     <span class="pu-sub-date">{{partupDateCustom createdAt 'DD-MM-YY'}}</span>
                 </p>

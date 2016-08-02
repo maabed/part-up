@@ -48,6 +48,9 @@
 
             &-header
                 font-weight: bold
+                min-height: 20px
+                line-height: 11px
+
         .pu-sub-info > span, .pu-sub-info > a
             display: inline-block
             vertical-align: top
@@ -72,6 +75,21 @@
             width: 20%
         .pu-sub-content
             width: 40%
+
+        [data-expand]
+            overflow: hidden
+            white-space: nowrap
+            text-overflow: ellipsis
+
+            &:hover
+                cursor: pointer
+            &.pu-state-expanded
+                overflow: visible
+                white-space: normal
+                text-overflow: inherit
+                &:hover
+                    cursor: default
+
         .pu-sub-highlight
             color: $color-primary
             width: 20%

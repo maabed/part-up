@@ -56,7 +56,7 @@
             <p class="pu-sub-info ">
                 <span class="pu-sub-id">{{ _id }}</span>
                 <a href="{{pathFor 'network' slug }}" class="pu-sub-name">{{ name }}</a>
-                <span class="pu-sub-content">{{ description }}</span>
+                <span class="pu-sub-content" data-expand>{{ description }}</span>
                 <span class="pu-sub-stats">
                     <ul>
                         {{#each networkAdmins}}

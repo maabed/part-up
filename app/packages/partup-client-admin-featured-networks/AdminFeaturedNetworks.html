@@ -129,7 +129,7 @@
                 <p class="pu-sub-info">
                     <span class="pu-sub-id">{{ _id }}</span>
                     <a href="{{ pathFor route='network' slug=slug }}" class="pu-sub-name">{{ name }}</a>
-                    <span class="pu-sub-content">{{featured.comment}}</span>
+                    <span class="pu-sub-content" data-expand>{{featured.comment}}</span>
                     <span class="pu-sub-highlight"><a data-hovercontainer="HoverContainer_upper" data-hovercontainer-context="{{ featured.by_upper._id }}" >{{featured.by_upper.title}}</a> - {{language}}</span>
                     <span class="pu-sub-date">{{partupDateCustom createdAt 'DD-MM-YY'}}</span>
                 </p>

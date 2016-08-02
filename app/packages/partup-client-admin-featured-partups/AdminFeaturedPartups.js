@@ -66,6 +66,9 @@ Template.AdminFeaturedPartups.events({
         $(event.currentTarget).next('[data-toggle-target]').toggleClass('pu-state-active');
         $('[data-toggle-target]').not($(event.currentTarget).next('[data-toggle-target]')[0]).removeClass('pu-state-active');
     },
+    'click [data-expand]': function(event) {
+        $(event.currentTarget).addClass('pu-state-expanded');
+    },
     'click [data-unset-featured]': function(event, template) {
         Partup.client.prompt.confirm({
             onConfirm: function() {
