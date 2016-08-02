@@ -32,30 +32,28 @@
             </div>
         </div>
         <h2>Users (<a target="_blank" href="/csv/admin/users?token={{getToken}}">csv export</a>)</h2>
-        <form class="usersearch">
-            <input data-usersearchfield placeholder="search for user name"/>
-            <button data-search>search</button>
+        <form class="pu-row usersearch">
+            <div class="cell stretch"><input class="pu-input" data-usersearchfield placeholder="Search for user name"/></div>
+            <div class="cell"><button class="pu-button" data-search>Search</button></div>
         </form>
         <ul class="pu-list pu-list-lineseparated pu-list-admin">
             <li>
-                <p class="pu-sub-upperinfo">
-                    <a href="#" class="pu-sub-name">Naam</a>
+                <p class="pu-sub-info pu-sub-info-header">
                     <span class="pu-sub-id">ID</span>
-                    <span class="pu-sub-mail">Email</span>
-                    <span class="pu-sub-status">Telefoon</span>
-                    <span class="pu-sub-date">Aangemeld</span>
+                    <span class="pu-sub-name">Name</span>
+                    <span class="pu-sub-content">Email</span>
+                    <span class="pu-sub-highlight">Phone</span>
+                    <span class="pu-sub-date">Created</span>
                 </p>
             </li>
             {{# each users }}
                 <li>
-                    <p class="pu-sub-upperinfo">
-                        <a href="{{ pathFor route='profile' _id=_id }}" class="pu-sub-name">{{profile.name}}</a>
-                        <span class="pu-sub-id">{{_id}}</span>
-                        <span class="pu-sub-mail">{{getMail . }}</span>
+                    <p class="pu-sub-info">
+                        <span class="pu-sub-id"><span>{{_id}}</span></span>
+                        <a href="{{ pathFor route='profile' _id=_id }}" class="pu-sub-name"  data-hovercontainer="HoverContainer_upper" data-hovercontainer-context="{{ _id }}">{{profile.name}}</a>
+                        <span class="pu-sub-content">{{getMail . }}</span>
+                        <span class="pu-sub-highlight">{{profile.phonenumber}}</span>
                         <span class="pu-sub-date">{{partupDateCustom createdAt 'DD-MM-YY'}}</span>
-                        {{#if profile.phonenumber}}
-                            <span class="pu-sub-status">{{profile.phonenumber}}</span>
-                        {{/if}}
                     </p>
                     <button type="button" class="pu-sub-settings pu-button pu-button-checkmark" data-toggle><i class="picon-cog"></i></button>
                     <div class="pu-uppersettings" data-toggle-target>
@@ -77,6 +75,10 @@
                 </li>
             {{/each}}
         </ul>
-        <button data-showmore>show more</button>
+        <div class="pu-row">
+            <div class="cell stretch">
+                <button data-showmore class="pu-button pu-button-gray pu-sub-loadmore">show more</button>
+            </div>
+        </div>
     </div>
 </template>

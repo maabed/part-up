@@ -28,6 +28,11 @@ Template.AdminCreateSwarm.helpers({
 /* Widget events */
 /*************************************************************/
 Template.AdminCreateSwarm.events({
+    'click [data-toggle]': function(event) {
+        event.preventDefault();
+        $(event.currentTarget).next('[data-toggle-target]').toggleClass('pu-state-active');
+        $('[data-toggle-target]').not($(event.currentTarget).next('[data-toggle-target]')[0]).removeClass('pu-state-active');
+    },
     'click [data-closepage]': function eventClickClosePage (event, template) {
         event.preventDefault();
         Intent.return('create-swarm');
@@ -40,13 +45,17 @@ Template.AdminCreateSwarm.events({
         });
     },
     'click [data-swarm-remove]': function(event, template) {
-        var swarmId = $(event.currentTarget).data('swarm-remove');
-        Meteor.call('swarms.remove', swarmId, function(error) {
-            if (error) {
-                Partup.client.notify.error(TAPi18n.__('pages-modal-admin-createswarm-error-' + error.reason));
-                return;
+        Partup.client.prompt.confirm({
+            onConfirm: function() {
+                var swarmId = $(event.currentTarget).data('swarm-remove');
+                Meteor.call('swarms.remove', swarmId, function(error) {
+                    if (error) {
+                        Partup.client.notify.error(TAPi18n.__('pages-modal-admin-createswarm-error-' + error.reason));
+                        return;
+                    }
+                    Partup.client.notify.success('Swarm removed correctly');
+                });
             }
-            Partup.client.notify.success('Swarm removed correctly');
         });
     }
 });

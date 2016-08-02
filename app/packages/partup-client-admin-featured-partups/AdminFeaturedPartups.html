@@ -75,14 +75,33 @@
     {{/autoForm}}
 
     <h2>Featured Part-ups</h2>
-    <ul class="pu-list pu-list-lineseparated">
+    <ul class="pu-list pu-list-lineseparated pu-list-admin">
+        <li>
+            <p class="pu-sub-info pu-sub-info-header">
+                <span class="pu-sub-id">ID</span>
+                <span class="pu-sub-name">Name</span>
+                <span class="pu-sub-content">Comment</span>
+                <span class="pu-sub-highlight">Author</span>
+                <span class="pu-sub-date">Created</span>
+            </p>
+        </li>
         {{#each featuredPartups}}
             <li>
-                <p class="pu-sub-name">{{name}}</p>
-                <button type="button" class="pu-sub-remove pu-button pu-button-checkmark pu-button-checkmark-deny" data-unset-featured data-partup-id="{{ _id }}"> <i class="picon-times"></i> </button>
-                <p class="pu-sub-description"><i>{{featured.comment}}</i>
-                <a href="{{ pathFor 'profile' _id=getQuoteAuthor._id }}" data-hovercontainer="HoverContainer_upper" data-hovercontainer-context="{{ getQuoteAuthor._id }}"><figure class="pu-avatar pu-avatar-micro" style="background-image: url('{{ partupImageUrl id=getQuoteAuthor.profile.image }}');"></figure> {{ getQuoteAuthor.profile.name }}</a>
-                 - <b>{{featured.by_upper.title}}</b> - {{language}}</p>
+                <p class="pu-sub-info">
+                    <span class="pu-sub-id"><span>{{ _id }}</span></span>
+                    <a href="{{pathFor route='partup' slug=slug }}" class="pu-sub-name">{{name}}</a>
+                    <span class="pu-sub-content">{{featured.comment}}</span>
+                    <span class="pu-sub-highlight"><a data-hovercontainer="HoverContainer_upper" data-hovercontainer-context="{{ featured.by_upper._id }}" >{{featured.by_upper.title}}</a> - {{language}}</span>
+                    <span class="pu-sub-date">{{partupDateCustom createdAt 'DD-MM-YY'}}</span>
+                </p>
+                <button type="button" class="pu-sub-settings pu-button pu-button-checkmark" data-toggle><i class="picon-cog"></i></button>
+                <div class="pu-uppersettings" data-toggle-target>
+                    <ul class="pu-list">
+                        <li class="pu-dropdownitem pu-dropdownitem-small pu-sub-delete">
+                            <button data-unset-featured data-partup-id="{{ _id }}">unfeature</button>
+                        </li>
+                    </ul>
+                </div>
             </li>
         {{/each}}
     </ul>

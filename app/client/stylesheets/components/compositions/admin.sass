@@ -9,9 +9,11 @@
             right: 0px
             left: 0px
             top: 0px
-            background-color: #fff
+            background-color: #fbfbfb
             width: 100%
             padding-left: 40px
+            border-bottom-left-radius: 4px
+            border-bottom-right-radius: 4px
 
             > li
                 display: inline-block
@@ -23,72 +25,69 @@
                     padding-bottom: 10px
                     display: block
 
+            .pu-state-active
+                border-bottom: 2px solid #494949
+
     .pu-wrap-modal
         max-width: 1042px
 
     .pu-sub-pagecontent
-        padding-top: 60px
+        padding-top: 80px
 
     .pu-composition > .pu-list
         margin-top: 15px
 
     .pu-list-admin
-        .pu-sub-upperinfo
-            height: 40px
+        .pu-sub-info
+            min-height: 40px
+            float: left
+            margin: 0 0 0 10px
+            line-height: 40px
+            width: calc(100% - 50px)
+            font-size: 0
 
-        .pu-sub-name
-            position: absolute
-            top: 10px
-            left: 8%
-            color: $color-text
-            text-decoration: none
-            font-weight: bold
-            width: 27%
-            white-space: nowrap
-            overflow: hidden
-            text-overflow: ellipsis
-            transition: width .2s
-            background-color: #fff
-            &:hover
-                width: auto
-                padding-right: 15px
-                z-index: 9
-
-
-        .pu-sub-mail
-            position: absolute
-            top: 10px
-            left: 35%
+            &-header
+                font-weight: bold
+        .pu-sub-info > span, .pu-sub-info > a
+            display: inline-block
+            vertical-align: top
+            font-size: normal
+            padding: 5px
+            font-size: 16px
 
         .pu-sub-id
-            position: absolute
-            top: 10px
-            left: 5px
-            width: 50px
+            width: 10%
             overflow: hidden
-            white-space: nowrap
             text-overflow: ellipsis
-            background-color: #fff
-            transition: width .2s
+            white-space: nowrap
+            position: relative
+            span
+                background-color: #fff
+                padding-right: 10px
 
             &:hover
-                width: auto
-                padding-right: 15px
+                overflow: visible
                 z-index: 9
+        .pu-sub-name
+            width: 20%
+        .pu-sub-content
+            width: 40%
+        .pu-sub-highlight
+            color: $color-primary
+            width: 20%
+            a
+                color: $color-primary
+
+            span
+                color: $color-text
+
+        .pu-sub-stats
+            width: 20%
+            a
+                color: $color-primary
 
         .pu-sub-date
-            position: absolute
-            left: 89%
-            top: 10px
-
-        .pu-sub-status
-            color: $color-primary
-            position: absolute
-            top: 10px
-            left: 75%
-            font-weight: bold
-            background-color: #fff
-            padding-left: 5px
+            width: 10%
 
         .pu-uppersettings
             position: absolute
@@ -112,3 +111,6 @@
 
                 &:last-child
                     border-bottom: 0
+    .pu-sub-loadmore
+        margin-top: 20px
+        width: 100%

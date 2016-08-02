@@ -1,25 +1,24 @@
 Template.Admin.onCreated(function() {
-    var self = this;
+    var template = this;
 
-    self.users = new ReactiveVar([]);
-    self.partupstats = new ReactiveVar([]);
-    self.userstats = new ReactiveVar([]);
-
-    self.page = 0;
-    self.limit = 10;
+    template.users = new ReactiveVar([]);
+    template.partupstats = new ReactiveVar([]);
+    template.userstats = new ReactiveVar([]);
+    template.page = 0;
+    template.limit = 20;
 
     Meteor.call('users.admin_all', {}, {
-        page: self.page,
-        limit: self.limit
+        page: template.page,
+        limit: template.limit
     }, function(error, results) {
-        self.page = 1;
-        self.users.set(results);
+        template.page = 1;
+        template.users.set(results);
     });
     Meteor.call('users.admin_stats', function(error, results) {
-        self.userstats.set(results);
+        template.userstats.set(results);
     });
     Meteor.call('partups.admin_all', function(error, results) {
-        self.partupstats.set(results);
+        template.partupstats.set(results);
     });
 
 });
@@ -38,12 +37,12 @@ Template.Admin.helpers({
     getMail: function(user) {
         return User(user).getEmail();
     },
-    getToken: function () {
+    getToken: function() {
         return Accounts._storedLoginToken();
     },
     isUserActive: function(user) {
         return User(user).isActive();
-    }
+    },
 });
 
 Template.Admin.events({
@@ -57,9 +56,8 @@ Template.Admin.events({
         template.page = 0;
         var query = template.find('[data-usersearchfield]').value;
         Meteor.call('users.admin_all', {
-            'profile.name':{$regex:query, $options:'i'}
-        },
-        {
+            'profile.name': {$regex: query, $options: 'i'}
+        },{
             limit: 100,
             page: template.page
         }, function(error, results) {

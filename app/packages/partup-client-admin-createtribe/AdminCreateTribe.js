@@ -32,16 +32,18 @@ Template.AdminCreateTribe.helpers({
         return Networks.find();
     },
     privacyType: function(type) {
-        return _.findWhere(privacyTypeOptions, {value: type}).label;
+        var pType = _.findWhere(privacyTypeOptions, {value: type});
+        if (!pType) return false;
+        return pType.label ? pType.label : false;
     },
     upperCount: function(network) {
-        return network.uppers.length;
+        return network.uppers ? network.uppers.length : 0;
     },
     currentNetwork: function() {
         return Template.instance().currentNetwork;
     },
     networkAdmins: function() {
-        return Meteor.users.find({_id: {$in: this.admins}});
+        return Meteor.users.find({_id: {$in: this.admins ? this.admins : []}});
     }
 });
 
@@ -49,7 +51,12 @@ Template.AdminCreateTribe.helpers({
 /* Widget events */
 /*************************************************************/
 Template.AdminCreateTribe.events({
-    'click [data-closepage]': function eventClickClosePage (event, template) {
+    'click [data-toggle]': function(event) {
+        event.preventDefault();
+        $(event.currentTarget).next('[data-toggle-target]').toggleClass('pu-state-active');
+        $('[data-toggle-target]').not($(event.currentTarget).next('[data-toggle-target]')[0]).removeClass('pu-state-active');
+    },
+    'click [data-closepage]': function(event, template) {
         event.preventDefault();
         Intent.return('create-network');
     },
@@ -61,13 +68,17 @@ Template.AdminCreateTribe.events({
         });
     },
     'click [data-network-remove]': function(event, template) {
-        var networkId = $(event.currentTarget).data('network-remove');
-        Meteor.call('networks.remove', networkId, function(error) {
-            if (error) {
-                Partup.client.notify.error(TAPi18n.__('pages-modal-admin-createtribe-error-' + error.reason));
-                return;
+        Partup.client.prompt.confirm({
+            onConfirm: function() {
+                var networkId = $(event.currentTarget).data('network-remove');
+                Meteor.call('networks.remove', networkId, function(error) {
+                    if (error) {
+                        Partup.client.notify.error(TAPi18n.__('pages-modal-admin-createtribe-error-' + error.reason));
+                        return;
+                    }
+                    Partup.client.notify.success('Tribe removed correctly');
+                });
             }
-            Partup.client.notify.success('Tribe removed correctly');
         });
     }
 });

@@ -99,11 +99,20 @@ Template.AdminFeaturedNetworks.helpers({
 /* Page events */
 /*************************************************************/
 Template.AdminFeaturedNetworks.events({
+    'click [data-toggle]': function(event) {
+        event.preventDefault();
+        $(event.currentTarget).next('[data-toggle-target]').toggleClass('pu-state-active');
+        $('[data-toggle-target]').not($(event.currentTarget).next('[data-toggle-target]')[0]).removeClass('pu-state-active');
+    },
     'click [data-unset-featured]': function(event, template) {
-        Meteor.call('networks.unfeature', event.currentTarget.dataset.networkId, function(err) {
-            if (err) {
-                Partup.client.notify.error(err.reason);
-                return;
+        Partup.client.prompt.confirm({
+            onConfirm: function() {
+                Meteor.call('networks.unfeature', event.currentTarget.dataset.networkId, function(err) {
+                    if (err) {
+                        Partup.client.notify.error(err.reason);
+                        return;
+                    }
+                });
             }
         });
     }
