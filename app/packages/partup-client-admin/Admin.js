@@ -17,7 +17,7 @@ Template.Admin.onCreated(function() {
     Meteor.call('users.admin_stats', function(error, results) {
         template.userstats.set(results);
     });
-    Meteor.call('partups.admin_all', function(error, results) {
+    Meteor.call('partups.admin_stats', function(error, results) {
         template.partupstats.set(results);
     });
 

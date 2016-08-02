@@ -256,7 +256,21 @@ Meteor.methods({
     /**
     * Returns partup stats to superadmins only
     */
-    'partups.admin_all': function() {
+    'partups.admin_all': function(selector, options) {
+        var user = Meteor.users.findOne(this.userId);
+        if (!User(user).isAdmin()) {
+            return;
+        }
+
+        var selector = selector || {};
+        var option = options || {};
+        return Partups.findForAdminList(selector, options).fetch();
+    },
+
+    /**
+    * Returns partup stats to superadmins only
+    */
+    'partups.admin_stats': function() {
         var user = Meteor.users.findOne(this.userId);
         if (!User(user).isAdmin()) {
             return;

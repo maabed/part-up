@@ -754,3 +754,16 @@ Partups.findStatsForAdmin = function() {
     });
     return results;
 };
+
+Partups.findForAdminList = function(selector, options) {
+    selector = selector || {};
+
+    var limit = options.limit;
+    var page = options.page;
+    return this.find(selector, {
+        fields: {'_id': 1, 'name': 1, 'description': 1, 'creator_id': 1, 'created_at': 1, 'network_id': 1, 'language': 1},
+        sort: {'created_at': -1},
+        limit: limit,
+        skip: limit * page
+    });
+};

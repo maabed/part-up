@@ -118,6 +118,7 @@ partup-client-admin-createswarm@0.0.1
 partup-client-admin-createtribe@0.0.1
 partup-client-admin-featured-networks@0.0.1
 partup-client-admin-featured-partups@0.0.1
+partup-client-admin-partups@0.0.1
 partup-client-autocomplete@0.0.1
 partup-client-base@0.0.1
 partup-client-chat@0.0.1
