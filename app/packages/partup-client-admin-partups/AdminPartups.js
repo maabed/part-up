@@ -38,17 +38,11 @@ Template.AdminPartups.events({
     'click [data-expand]': function(event) {
         $(event.currentTarget).addClass('pu-state-expanded');
     },
-    'click [data-unset-featured]': function(event, template) {
-        Partup.client.prompt.confirm({
-            onConfirm: function() {
-                Meteor.call('partups.unfeature', event.currentTarget.dataset.partupId, function(err) {
-                    if (err) {
-                        Partup.client.notify.error(err.reason);
-                        return;
-                    }
-                });
-            }
-        });
+    'click [data-delete]': function(event, template) {
+        alert('not yet implemented');
+    },
+    'click [data-edit]': function(event, template) {
+        alert('not yet implemented');
     },
     'submit .partupsearch': function(event, template) {
         event.preventDefault();
