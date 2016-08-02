@@ -57,6 +57,17 @@ Template.AdminPartups.events({
             template.partups.set(results);
         });
     },
+    'click [data-showmore]': function(event, template) {
+        Meteor.call('partups.admin_all', {}, {
+            page: template.page,
+            limit: template.limit
+        }, function(error, results) {
+            var currentPartups = template.partups.get();
+            var newPartupsList = currentPartups.concat(results);
+            template.partups.set(newPartupsList);
+            template.page++;
+        });
+    },
 });
 
 /*************************************************************/
