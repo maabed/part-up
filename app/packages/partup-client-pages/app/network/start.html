@@ -1,7 +1,7 @@
 <template name="app_network_start">
-    <article class="pu-page pu-page-overlay">
+    <article class="pu-page pu-page-overlay {{#if data.network.archived_at}}pu-page-overlay-dark{{/if}}">
 
-        <div class="pu-composition pu-composition-tribestart">
+        <div class="pu-composition pu-composition-tribestart {{#if data.network.archived_at}}pu-composition-tribestart-archived{{/if}}">
             {{#unless state.loaded}}
                 {{> Spinner color='inverted' }}
             {{else}}
@@ -12,13 +12,15 @@
                             <i class="picon-cog"></i>
                         </a>
                     {{/if}}
-                    <a href="{{ pathFor route='network-detail' slug=data.network.slug }}" class="pu-button"><i class="picon-times"></i></a>
+                    {{#unless data.network.archived_at}}
+                        <a href="{{ pathFor route='network-detail' slug=data.network.slug }}" class="pu-button"><i class="picon-times"></i></a>
+                    {{/unless}}
                 </nav>
                 <header class="pu-highlight pu-highlight-inverted">
                     <figure class="pu-avatar pu-avatar-responsive pu-avatar-square" style="{{#with data.network.image }}background-image:url('{{ partupImageUrl id=. store='360x360'}}');{{/with }}"></figure>
                     <h1>{{data.network.name}}</h1>
                     <h3>
-                        {{data.network.description}} <a class="pu-link pu-link-strong" href="{{pathFor route='network-about' slug=data.network.slug}}">Read More</a>
+                        {{data.network.description}}{{#unless data.network.archived_at}} <a class="pu-link pu-link-strong" href="{{pathFor route='network-about' slug=data.network.slug}}">{{_ 'pages-app-network-start-button-readmore'}}</a>{{/unless}}
                     </h3>
                     {{#with data.network.displayTags data.network.slug}}
                         <ul class="pu-list pu-list-horizontal pu-list-tags">
@@ -28,10 +30,14 @@
                         </ul>
                     {{/with}}
                     <!-- join or leave button -->
-                    {{#if data.network.hasMember currentUserId}}
-                        <a href="{{ pathFor route='network-detail' slug=data.network.slug }}" class="pu-button">{{_ 'pages-app-network-start-button-gototribe'}}</a>
+                    {{#if data.network.archived_at}}
+                        <a href="#" class="pu-button pu-button-gray pu-button-disabled">{{_ 'pages-app-network-start-button-gototribe-disabled'}}</a>
                     {{else}}
-                        {{> app_network_joinbutton network=data.network }}
+                        {{#if data.network.hasMember currentUserId}}
+                            <a href="{{ pathFor route='network-detail' slug=data.network.slug }}" class="pu-button">{{_ 'pages-app-network-start-button-gototribe'}}</a>
+                        {{else}}
+                            {{> app_network_joinbutton network=data.network }}
+                        {{/if}}
                     {{/if}}
                 </header>
                 {{# unless data.network.isClosedForUpper currentUserId }}
