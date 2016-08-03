@@ -71,15 +71,24 @@ Template.AdminCreateTribe.events({
         });
     },
     'click [data-network-remove]': function(event, template) {
+        var networkId = $(event.currentTarget).data('network-remove');
+        var network = Networks.findOne(networkId);
         Partup.client.prompt.confirm({
+            title: 'Are you sure you want to delete this tribe?',
+            message: 'There are still ' + network.stats.partup_count + ' active part-ups in this tribe.',
             onConfirm: function() {
-                var networkId = $(event.currentTarget).data('network-remove');
-                Meteor.call('networks.remove', networkId, function(error) {
-                    if (error) {
-                        Partup.client.notify.error(TAPi18n.__('pages-modal-admin-createtribe-error-' + error.reason));
-                        return;
+                Partup.client.prompt.confirm({
+                    title: 'Are you REALLY sure you want to delete this tribe?',
+                    message: 'There are still ' + network.stats.upper_count + ' active uppers in this tribe.',
+                    onConfirm: function() {
+                        Meteor.call('networks.remove', networkId, function(error) {
+                            if (error) {
+                                Partup.client.notify.error(TAPi18n.__('pages-modal-admin-createtribe-error-' + error.reason));
+                                return;
+                            }
+                            Partup.client.notify.success('Tribe removed correctly');
+                        });
                     }
-                    Partup.client.notify.success('Tribe removed correctly');
                 });
             }
         });

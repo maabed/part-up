@@ -18,7 +18,7 @@ Partup.client.prompt = {
      * @memberof Partup.client.prompt
      */
     onConfirm: function() {
-        if (this.confirmCallback) this.confirmCallback();
+        if (this.confirmCallback) setTimeout(this.confirmCallback, 100);
         this._dismiss();
     },
 
@@ -28,7 +28,7 @@ Partup.client.prompt = {
      * @memberof Partup.client.prompt
      */
     onCancel: function() {
-        if (this.cancelCallback) this.cancelCallback();
+        if (this.cancelCallback) setTimeout(this.cancelCallback, 100);
         this._dismiss();
     },
 
