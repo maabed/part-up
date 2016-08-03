@@ -55,10 +55,17 @@
                 {{#if partupEquals activeTab 'tribes'}}
                     {{#each networks}}
                     <li class="pu-dropdownitem">
-                        <a href="{{ pathFor 'network' slug=slug query='show=false' }}">
-                            <figure class="pu-avatar pu-avatar-square" style="{{# with partupGetImageUrl imageObject '80x80'}}background-image:url('{{ . }}');{{/ with}}"></figure>
-                            <p>{{ name }}</p>
-                        </a>
+                        {{#if archived_at}}
+                            <a href="{{ pathFor 'network' slug=slug query='show=true' }}">
+                                <figure class="pu-avatar pu-avatar-square" style="{{# with partupGetImageUrl imageObject '80x80'}}background-image:url('{{ . }}');{{/ with}}"></figure>
+                                <p>{{ name }}</p>
+                            </a>
+                        {{else}}
+                            <a href="{{ pathFor 'network' slug=slug query='show=false' }}">
+                                <figure class="pu-avatar pu-avatar-square" style="{{# with partupGetImageUrl imageObject '80x80'}}background-image:url('{{ . }}');{{/ with}}"></figure>
+                                <p>{{ name }}</p>
+                            </a>
+                        {{/if}}
                     </li>
                     {{/each}}
                 {{/if}}
