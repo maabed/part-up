@@ -1,78 +1,10 @@
 <template name="AdminPartups">
 
-   <!--  <h2>Feature Part-up</h2>
-    {{#autoForm schema=schema id="featurePartupForm" validation="submitThenKeyup" class="pu-form pu-block pu-block-highlighted" }}
-
-
-        <label class="pu-formfield">
-            <span class="pu-label">
-                {{_ 'pages-modal-admin-featured-partups-form-partup-label'}}
-            </span>
-
-            <span class="pu-sub-input">
-                {{# AutocompleteAdvanced
-                placeholder=partupFieldPlaceholder
-                label=partupLabel
-                selection=partupSelectionReactiveVar
-                onQuery=partupQuery
-                formValue=partupFormvalue }}
-
-                    <input type="text" name="partup">
-
-                {{/ AutocompleteAdvanced }}
-            </span>
-        </label>
-
-
-        <label class="pu-formfield">
-            <span class="pu-label">
-                {{_ 'pages-modal-admin-featured-partups-form-comment-label'}}
-            </span>
-
-            <div class="pu-sub-validations {{#if afFieldIsInvalid name='comment' }}pu-state-invalid{{/if}}">
-                <span class="pu-sub-input">{{> afFieldInput name='comment' placeholder=commentFieldPlaceholder class="pu-textarea" rows=3 }}</span>
-                <span class="pu-sub-error">{{ afFieldMessage name='comment' }}</span>
-            </div>
-        </label>
-
-
-        <label class="pu-formfield">
-            <span class="pu-label">
-                {{_ 'pages-modal-admin-featured-partups-form-author-label'}}
-            </span>
-
-            <div class="pu-sub-validations {{#if afFieldIsInvalid name='author_id' }}pu-state-invalid{{/if}}">
-                <span class="pu-sub-input">{{> afFieldInput name='author_id' placeholder=authorFieldPlaceholder class="pu-input"}}</span>
-                <span class="pu-sub-error">{{ afFieldMessage name='author_id' }}</span>
-            </div>
-        </label>
-
-
-        <label class="pu-formfield">
-            <span class="pu-label">
-                {{_ 'pages-modal-admin-featured-partups-form-job-title-label'}}
-            </span>
-
-            <div class="pu-sub-validations {{#if afFieldIsInvalid name='job_title' }}pu-state-invalid{{/if}}">
-                <span class="pu-sub-input">{{> afFieldInput name='job_title' placeholder=jobTitleFieldPlaceholder  class="pu-input" }}</span>
-                <span class="pu-sub-error">{{ afFieldMessage name='job_title' }}</span>
-            </div>
-        </label>
-
-
-        {{> afFieldInput name="active" value="1" type="hidden" }}
-
-
-        <footer class="pu-row">
-            <div class="cell">
-                <button class="pu-button {{# if submitting }}pu-state-loading{{/ if }} {{# unless partupSelectionReactiveVar.get }}pu-state-disabled{{/ unless }}">
-                    {{_ 'pages-modal-admin-featured-partups-form-confirm'}}
-                    {{> Spinner type='small' color='inverted' }}
-                </button>
-            </div>
-        </footer>
-
-    {{/autoForm}} -->
+    {{#if partupIsPopupActive 'popup.admin-edit-partup' }}
+        {{#contentFor region="PopupContent" data=. }}
+            {{> EditPartup partup=currentPartup }}
+        {{/contentFor}}
+    {{/if}}
 
     <h2>Part-ups</h2>
     <form class="pu-row partupsearch">

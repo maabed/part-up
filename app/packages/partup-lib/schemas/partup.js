@@ -305,3 +305,10 @@ Partup.schemas.forms.featurePartup = new SimpleSchema({
         type: String
     }
 });
+
+Partup.schemas.forms.editPartup = new SimpleSchema({
+    network_id: {
+        type: String,
+        optional: true
+    }
+});

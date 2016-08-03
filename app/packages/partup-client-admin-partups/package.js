@@ -19,7 +19,9 @@ Package.onUse(function(api) {
     api.addFiles([
 
         'AdminPartups.html',
-        'AdminPartups.js'
+        'AdminPartups.js',
+        'templates/EditPartup.html',
+        'templates/EditPartup.js'
 
     ], 'client');
 

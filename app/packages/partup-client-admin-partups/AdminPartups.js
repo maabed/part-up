@@ -5,6 +5,8 @@ Template.AdminPartups.onCreated(function() {
     template.page = 0;
     template.limit = 20;
 
+    template.currentPartup = new ReactiveVar();
+
     Meteor.call('partups.admin_all', {}, {
         page: template.page,
         limit: template.limit
@@ -23,6 +25,9 @@ Template.AdminPartups.helpers({
     },
     creatorById: function(id) {
         return Meteor.users.findOne(id);
+    },
+    currentPartup: function() {
+        return Template.instance().currentPartup.get();
     }
 });
 
@@ -42,7 +47,10 @@ Template.AdminPartups.events({
         alert('not yet implemented');
     },
     'click [data-edit]': function(event, template) {
-        alert('not yet implemented');
+        template.currentPartup.set(this);
+        Partup.client.popup.open({
+            id: 'popup.admin-edit-partup'
+        });
     },
     'submit .partupsearch': function(event, template) {
         event.preventDefault();
