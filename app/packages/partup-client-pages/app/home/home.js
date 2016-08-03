@@ -55,7 +55,8 @@ Template.app_home.onCreated(function() {
             var tribe = _partup.network ? 47 : 0;
 
             return BASE_HEIGHT + MARGIN + name + description + tribe;
-        }
+        },
+        columns: getAmountOfColumns(Partup.client.screen.size.get('width'))
 
     });
 });
