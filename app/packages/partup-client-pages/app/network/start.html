@@ -52,6 +52,11 @@
                         </section>
                     </footer>
                 {{/unless}}
+                {{#if data.network.archived_at}}
+                    <div class="pu-sub-archivedfooter">
+                        {{_ 'pages-app-network-start-label-archived' }} <strong>{{ partupDateOnly data.network.archived_at }}</strong>
+                    </div>
+                {{/if}}
             {{/unless}}
             <div class="pu-tribebackground {{#if state.loaded}}pu-state-loaded{{/if}}" style="{{#with data.network.background_image }}background-image:url('{{ partupImageUrl id=. store='1200x520'}}');{{/with }}"></div>
         </div>

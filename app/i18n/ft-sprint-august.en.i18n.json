@@ -1,4 +1,5 @@
 {
     "pages-app-network-start-button-readmore": "Read more",
-    "pages-app-network-start-button-gototribe-disabled": "Tribe is archived"
+    "pages-app-network-start-button-gototribe-disabled": "Tribe is archived",
+    "pages-app-network-start-label-archived": "Archived since"
 }
