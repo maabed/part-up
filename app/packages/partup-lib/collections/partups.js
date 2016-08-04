@@ -408,6 +408,11 @@ Partups.NETWORK_CLOSED = NETWORK_CLOSED;
  * @memberof Partups
  * @public
  */
+Partups.NETWORK_ADMINS = NETWORK_ADMINS;
+/**
+ * @memberof Partups
+ * @public
+ */
 Partups.TYPE = TYPE;
 /**
  * @memberof Partups
@@ -436,12 +441,17 @@ Partups.guardedFind = function(userId, selector, options, accessToken) {
 
     if (Meteor.isClient) return this.find(selector, options);
 
-    var selector = selector || {};
-    var options = options || {};
+    selector = selector || {};
+    options = options || {};
 
+    var privacyTypes = [Partups.PUBLIC, Partups.NETWORK_PUBLIC];
+    if (options.isAdminOfNetwork) {
+        privacyTypes.push(Partups.NETWORK_ADMINS);
+        delete options.isAdminOfNetwork;
+    }
     var guardedCriterias = [
         // Either the partup is public or belongs to a public network
-        {'privacy_type': {'$in': [Partups.PUBLIC, Partups.NETWORK_PUBLIC]}}
+        {'privacy_type': {'$in': privacyTypes}}
     ];
 
     // If an access token is provided, we allow access if it matches one of the partups access tokens
