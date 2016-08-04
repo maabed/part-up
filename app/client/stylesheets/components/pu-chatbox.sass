@@ -1,5 +1,11 @@
 $border-radius: 4px
-
+@keyframes highlight-message
+    0%
+        background-color: transparent
+    70%
+        background-color: $color-secondary
+    100%
+        background-color: transparent
 .pu-chatbox
     position: relative
     margin-bottom: 12px
@@ -12,6 +18,7 @@ $border-radius: 4px
         height: 32px
         position: absolute
         // top: 2px
+        z-index: 3
 
         &.stick
             margin-top: 0 !important
@@ -29,12 +36,16 @@ $border-radius: 4px
 
     .pu-list
         li
+            position: relative
             display: block
             margin-bottom: 2px
 
             &:first-child .pu-chatmessage .pu-sub-chatname
                 display: block
 
+            div
+                z-index: 1
+                position: relative
 
         &:after, &:before
             top: 18px
@@ -44,6 +55,19 @@ $border-radius: 4px
             width: 0
             position: absolute
             pointer-events: none
+
+    .pu-state-highlight::after
+        content: ''
+        position: absolute
+        top: -5px
+        left: -65px
+        right: -65px
+        bottom: -5px
+        z-index: 0
+        background-color: transparent
+        animation-name: highlight-message
+        animation-iteration-count: 1
+        animation-duration: 750ms
 
     &-receive
         .pu-sub-chattime-outside

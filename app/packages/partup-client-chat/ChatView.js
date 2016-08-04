@@ -1,7 +1,7 @@
 Template.ChatView.onCreated(function() {
     var template = this;
     var chatId = template.data.config.chatId;
-    if (!chatId) throw "No chatId was provided";
+    if (!chatId) throw 'No chatId was provided';
     template.stickyAvatar = new ReactiveVar(undefined);
     template.initialized = new ReactiveVar(false);
     template.rendered = new ReactiveVar(false);
@@ -239,6 +239,18 @@ Template.ChatView.onCreated(function() {
         });
     };
 
+    template.onMessageClick = function(id) {
+        var searching = false;
+        if (template.data.config.reactiveHighlight) {
+            searching = !!template.data.config.reactiveHighlight.curValue;
+        }
+        template.data.config.onMessageClick({
+            message_id: id,
+            searching: searching,
+            target: $('[data-chat-message-id=' + id + ']')
+        });
+    };
+
     var newMessageListeneners = [];
     template.onNewMessageRender = function(callback) {
         newMessageListeneners.push(callback);
@@ -376,6 +388,9 @@ Template.ChatView.helpers({
         return {
             onMessageRender: function() {
                 return template.newMessagesDidRender;
+            },
+            onMessageClick: function() {
+                return template.onMessageClick;
             }
         };
     },

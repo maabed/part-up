@@ -38,7 +38,7 @@
                 </p>
                 {{#each data.messagesGroupedByDelay messages}}
                     {{#each data.messagesGroupedByUser messages}}
-                        {{> ChatMessage data=. highlight=state.reactiveHighlight onNewMessageRender=handlers.onMessageRender }}
+                        {{> ChatMessage data=. highlight=state.reactiveHighlight onNewMessageRender=handlers.onMessageRender onMessageClick=handlers.onMessageClick }}
                     {{/each}}
                 {{/each}}
             {{/each}}
@@ -58,7 +58,7 @@
                 </p>
                 {{#each data.messagesGroupedByDelay messages}}
                     {{#each data.messagesGroupedByUser messages}}
-                        {{> ChatMessage data=. highlight=state.reactiveHighlight onNewMessageRender=handlers.onMessageRender }}
+                        {{> ChatMessage data=. highlight=state.reactiveHighlight onNewMessageRender=handlers.onMessageRender onMessageClick=handlers.onMessageClick }}
                     {{/each}}
                 {{/each}}
             {{/each}}

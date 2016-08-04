@@ -14,13 +14,11 @@
                                 <span class="pu-sub-chattime pu-sub-chattime-outside">{{ partupDateTime created_at }}</span>
                             {{/if}}
                                 <p class="pu-highlighttext">
-                                    {{#with partupSanitize content}}
-                                        {{#with partupHighlight . data.highlight }}
-                                            {{#with partupAutolink . }}
-                                                {{{ partupLineBreakToBr . }}}
-                                            {{/with}}
-                                        {{/with}}
-                                    {{/with}}
+                                    {{#with partupSanitize          content }}
+                                    {{#with partupHighlight         . data.highlight }}
+                                    {{#with partupAutolink          . }}
+                                        {{{ partupLineBreakToBr     . }}}
+                                    {{/with}}{{/with}}{{/with}}
                                 </p>
                             {{#with preview_data }}
                                 <a href="{{url}}" target="_blank" class="pu-linkpreview">

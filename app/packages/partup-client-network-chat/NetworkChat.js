@@ -76,6 +76,15 @@ Template.NetworkChat.onCreated(function() {
     };
     template.throttledSetSearchQuery = _.throttle(setSearchQuery, 500, {trailing: true});
 
+    template.onMessageClick = function(messageClickEvent) {
+        if (!messageClickEvent.searching) return;
+        var message_id = messageClickEvent.message_id;
+        Meteor.call('chatmessages.get_context', networkSlug, message_id, {limit: 50}, function(err, res) {
+            template.reactiveMessages.set(res);
+            Partup.client.chat.highlightMessage(message_id);
+        });
+    };
+
     // messages
     var localChatMessagesCollection = [];
     template.reactiveMessages = new ReactiveVar([]);
@@ -122,9 +131,10 @@ Template.NetworkChat.helpers({
                     chatId: network.chat_id,
                     onScrollTop: template.loadOlderMessages,
                     onNewMessagesViewed: template.resetUnreadMessagesIndicatorBadge,
+                    onMessageClick: template.onMessageClick,
+                    placeholderText: TAPi18n.__('pages-app-network-chat-empty-placeholder'),
                     reactiveMessages: template.reactiveMessages,
                     reactiveHighlight:  template.searchQuery,
-                    placeholderText: TAPi18n.__('pages-app-network-chat-empty-placeholder'),
                     reactiveBottomBarHeight: template.bottomBarHeight
                 };
             },
