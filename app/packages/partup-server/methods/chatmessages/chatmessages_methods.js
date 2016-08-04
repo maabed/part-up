@@ -200,5 +200,62 @@ Meteor.methods({
             Log.error(error);
             throw new Meteor.Error(400, 'chatmessages_could_not_be_searched');
         }
+    },
+
+    /**
+     * Search chatmessages in a network
+     *
+     * @param {String} networkSlug
+     * @param {String} query
+     * @param {Object} options
+     */
+    'chatmessages.get_context': function(networkSlug, message_id, options) {
+        check(networkSlug, String);
+        check(message_id, String);
+        check(options, {
+            limit: Match.Optional(Number),
+            skip: Match.Optional(Number)
+        });
+
+        var user = Meteor.user();
+        var network = Networks.findOneOrFail({slug: networkSlug});
+        if (!user || !network.hasMember(user._id)) throw new Meteor.Error(401, 'unauthorized');
+
+        try {
+            var limit = options.limit ? Math.round(options.limit / 2) : 10;
+            var chat_id = network.chat_id;
+            var contextMessage = ChatMessages.findOne(message_id);
+
+            var olderMessages = ChatMessages.find({
+                    chat_id: chat_id,
+                    created_at: {$lt: contextMessage.created_at}
+                }, {
+                    limit: limit,
+                    sort: {created_at: -1}
+                }).fetch().sort(function(a, b) {
+                    var dateA = a.created_at;
+                    var dateB = b.created_at;
+
+                    // Make sure undefined dates are not interpreted as date
+                    if (!dateA && !dateB) return 0;
+                    if (dateA && !dateB) return -1;
+                    if (!dateA && dateB) return 1;
+
+                    return (dateA < dateB) ? -1 : (dateA > dateB) ? 1 : 0;
+                });
+
+            var newerMessages = ChatMessages.find({
+                    chat_id: chat_id,
+                    created_at: {$gt: contextMessage.created_at}
+                }, {
+                    limit: limit,
+                    sort: {created_at: 1}
+                }).fetch();
+
+            return [].concat(olderMessages, [contextMessage], newerMessages);
+        } catch (error) {
+            Log.error(error);
+            throw new Meteor.Error(400, 'chatmessage_context_could_not_be_found');
+        }
     }
 });
