@@ -206,12 +206,12 @@ Meteor.methods({
      * Search chatmessages in a network
      *
      * @param {String} networkSlug
-     * @param {String} query
+     * @param {String} messageId
      * @param {Object} options
      */
-    'chatmessages.get_context': function(networkSlug, message_id, options) {
+    'chatmessages.get_context': function(networkSlug, messageId, options) {
         check(networkSlug, String);
-        check(message_id, String);
+        check(messageId, String);
         check(options, {
             limit: Match.Optional(Number),
             skip: Match.Optional(Number)
@@ -223,11 +223,11 @@ Meteor.methods({
 
         try {
             var limit = options.limit ? Math.round(options.limit / 2) : 10;
-            var chat_id = network.chat_id;
-            var contextMessage = ChatMessages.findOne(message_id);
+            var chatId = network.chat_id;
+            var contextMessage = ChatMessages.findOne(messageId);
 
             var olderMessages = ChatMessages.find({
-                    chat_id: chat_id,
+                    chat_id: chatId,
                     created_at: {$lt: contextMessage.created_at}
                 }, {
                     limit: limit,
@@ -245,7 +245,7 @@ Meteor.methods({
                 });
 
             var newerMessages = ChatMessages.find({
-                    chat_id: chat_id,
+                    chat_id: chatId,
                     created_at: {$gt: contextMessage.created_at}
                 }, {
                     limit: limit,
