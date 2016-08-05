@@ -38,6 +38,6 @@ Template.ChatMessage.helpers({
 Template.ChatMessage.events({
     'click [data-chat-message-id]': function(event, template) {
         var messageId = $(event.currentTarget).data('chat-message-id');
-        if (template.data.onMessageClick) template.data.onMessageClick(messageId);
+        if (template.data.onMessageClick) template.data.onMessageClick(this);
     }
 });

@@ -1,5 +1,8 @@
 {
     "pages-app-network-start-button-readmore": "Read more",
     "pages-app-network-start-button-gototribe-disabled": "Tribe is archived",
-    "pages-app-network-start-label-archived": "Archived since"
+    "pages-app-network-start-label-archived": "Archived since",
+    "pages-app-network-chat-highlight-context": "Showing messages from",
+    "pagesapp-network-chat-highlight-jump-to-present": "Jump to present",
+    "pages-app-network-chat-highlight-context-no-date": "the past"
 }

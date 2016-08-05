@@ -5,7 +5,7 @@ $border-radius: 4px
     70%
         background-color: $color-secondary
     100%
-        background-color: transparent
+        background-color: rgba($color-secondary, .1)
 .pu-chatbox
     position: relative
     margin-bottom: 12px
@@ -64,7 +64,7 @@ $border-radius: 4px
         right: -65px
         bottom: -5px
         z-index: 0
-        background-color: transparent
+        background-color: rgba($color-secondary, .1)
         animation-name: highlight-message
         animation-iteration-count: 1
         animation-duration: 750ms
@@ -164,4 +164,23 @@ $border-radius: 4px
     &-avatar-bottom
         .pu-avatar
             bottom: 0px
+
+.pu-state-context .pu-chatbox .pu-list li
+    cursor: pointer
+    &:after
+        content: ''
+        position: absolute
+        top: -5px
+        left: -65px
+        right: -65px
+        bottom: -5px
+        z-index: 0
+        transition: background-color .2s
+        background-color: transparent
+
+    &:hover:after
+        background-color: #fff
+
+    &.pu-state-highlight::after
+        background-color: rgba($color-secondary, .1)
 

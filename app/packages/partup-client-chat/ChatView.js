@@ -11,6 +11,7 @@ Template.ChatView.onCreated(function() {
     template.oldestUnreadMessage = new ReactiveVar(undefined);
     template.userIsAtScrollBottom = true;
     template.focussed = true;
+    template.activeContext = new ReactiveVar(false);
 
     if (template.data.config.reactiveBottomBarHeight) {
         template.data.config.reactiveBottomBarHeight.equalsFunc = function(a, b) {
@@ -239,15 +240,15 @@ Template.ChatView.onCreated(function() {
         });
     };
 
-    template.onMessageClick = function(id) {
+    template.onMessageClick = function(message) {
         var searching = false;
         if (template.data.config.reactiveHighlight) {
             searching = !!template.data.config.reactiveHighlight.curValue;
         }
         template.data.config.onMessageClick({
-            message_id: id,
+            message: message,
             searching: searching,
-            target: $('[data-chat-message-id=' + id + ']')
+            target: $('[data-chat-message-id=' + message._id + ']')
         });
     };
 
@@ -380,6 +381,15 @@ Template.ChatView.helpers({
             },
             bottomOffset: function() {
                 return template.data.config.reactiveBottomBarHeight.get();
+            },
+            activeContext: function() {
+                var message = template.activeContext.get();
+                if (!message) return false;
+                if (message.created_at) return message;
+                return {
+                    _id: message._id,
+                    no_date: TAPi18n.__('pages-app-network-chat-highlight-context-no-date')
+                };
             }
         };
     },
@@ -429,6 +439,9 @@ Template.ChatView.events({
     'click [data-scrollto]': function(event, template) {
         event.preventDefault();
         template.scrollToNewMessages();
+    },
+    'click [data-clear-context]': function(event, template) {
+        Partup.client.chat.clearMessageContext();
     }
 });
 

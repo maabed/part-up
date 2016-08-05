@@ -13,14 +13,20 @@
             <a href="{{pathFor route='profile' _id=data.stickyAvatar._id}}">
                 <figure class="pu-avatar" data-hovercontainer="HoverContainer_upper" data-hovercontainer-context="{{data.stickyAvatar._id}}" data-avatar></figure>
             </a>
-            {{#if state.reactiveHighlight.get}}
+            {{#if state.activeContext}}
                 <p class="pu-sub-highlight">
-                    {{ translations.showingResults }}
+                    {{_ 'pages-app-network-chat-highlight-context'}} {{#with state.activeContext}}{{#if no_date}}{{no_date}}{{else}}{{ partupDateNotification created_at }}{{/if}}{{/with}} - <span data-clear-context>{{_ 'pagesapp-network-chat-highlight-jump-to-present'}} <i class="picon-arrow-down"></i></span>
                 </p>
+            {{else}}
+                {{#if state.reactiveHighlight.get}}
+                    <p class="pu-sub-highlight">
+                        {{ translations.showingResults }}
+                    </p>
+                {{/if}}
             {{/if}}
         </header>
         <!-- messages container -->
-        <div data-preventscroll data-reversed-scroller>
+        <div data-preventscroll data-reversed-scroller class="{{#if state.activeContext }}pu-state-context{{/if}}{{#if state.reactiveHighlight.get}} pu-state-context{{/if}}">
             {{#if state.limitReached}}<p class="pu-textline pu-textline-light pu-textline-light-nostripe"><span>{{_ 'pages-app-network-chat-label-top'}}</span></p>{{/if}}
             <!-- old messages -->
             {{#if state.chatEmpty}}

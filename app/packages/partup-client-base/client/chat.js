@@ -24,7 +24,8 @@ Partup.client.chat = {
 
         this._current_chat.onNewMessageRender(cb);
     },
-    highlightMessage: function(message_id) {
+    showingContext: false,
+    showMessageContext: function(message) {
         var self = this;
         if (!self._current_chat) return;
 
@@ -32,8 +33,8 @@ Partup.client.chat = {
 
         setTimeout(function() {
             if (!self._current_chat) return;
-            window.location.hash = message_id;
-            var $msg = $('[data-chat-message-id=' + message_id + ']');
+            window.location.hash = message._id;
+            var $msg = $('[data-chat-message-id=' + message._id + ']');
             var $scroller = $('[data-reversed-scroller]');
             $msg.addClass('pu-state-highlight');
             $scroller.scrollTop(
@@ -42,6 +43,20 @@ Partup.client.chat = {
                 - ($scroller.height() / 2)
                 + ($msg.height() / 2)
             );
+            self._current_chat.activeContext.set(message);
+            self.showingContext = true;
         }, 100);
+    },
+    clearMessageContext: function() {
+        if (!this._current_chat) return;
+
+        if (this._current_chat.data.config.onClearContext) this._current_chat.data.config.onClearContext('');
+
+        $('.pu-state-highlight').removeClass('pu-state-highlight');
+        this._current_chat.activeContext.set(false);
+        this.showingContext = false;
+        if ($('[data-search]').length) $('[data-search]').val('');
+        Partup.client.window.clearUrlHash();
+        this._current_chat.instantlyScrollToBottom();
     }
 };

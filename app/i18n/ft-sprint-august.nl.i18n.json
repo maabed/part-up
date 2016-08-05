@@ -1,5 +1,8 @@
 {
     "pages-app-network-start-button-readmore": "Lees meer",
     "pages-app-network-start-button-gototribe-disabled": "Tribe is gearchiveerd",
-    "pages-app-network-start-label-archived": "Gearchiveerd sinds"
+    "pages-app-network-start-label-archived": "Gearchiveerd sinds",
+    "pages-app-network-chat-highlight-context": "Berichten getoont van",
+    "pagesapp-network-chat-highlight-jump-to-present": "Spring naar heden",
+    "pages-app-network-chat-highlight-context-no-date": "het verleden"
 }

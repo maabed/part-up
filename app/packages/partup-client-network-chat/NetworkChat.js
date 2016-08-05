@@ -53,7 +53,7 @@ Template.NetworkChat.onCreated(function() {
     });
 
     template.loadOlderMessages = function() {
-        if (template.loadingOlderMessages || template.searching) return;
+        if (template.loadingOlderMessages || template.searching || Partup.client.chat.showingContext) return;
         template.loadingOlderMessages = true;
         if (template.limitReached.get()) return;
         template.messageLimit.set(template.messageLimit.get() + 10);
@@ -77,11 +77,11 @@ Template.NetworkChat.onCreated(function() {
     template.throttledSetSearchQuery = _.throttle(setSearchQuery, 500, {trailing: true});
 
     template.onMessageClick = function(messageClickEvent) {
-        if (!messageClickEvent.searching) return;
-        var message_id = messageClickEvent.message_id;
+        if (!messageClickEvent.searching && !Partup.client.chat.showingContext) return;
+        var message_id = messageClickEvent.message._id;
         Meteor.call('chatmessages.get_context', networkSlug, message_id, {limit: 50}, function(err, res) {
             template.reactiveMessages.set(res);
-            Partup.client.chat.highlightMessage(message_id);
+            Partup.client.chat.showMessageContext(messageClickEvent.message);
         });
     };
 
@@ -99,7 +99,7 @@ Template.NetworkChat.onCreated(function() {
             // don't do anything if the user is searching
             // or if a message is not processed yet (scraper)
             // if (template.searching || sendingMessage) return;
-            if (template.searching) return;
+            if (template.searching || Partup.client.chat.showingContext) return;
 
             var limit = template.messageLimit.get();
             var messages = ChatMessages
@@ -116,6 +116,20 @@ Template.NetworkChat.onCreated(function() {
             Tracker.nonreactive(function() {
                 template.reactiveMessages.set(localChatMessagesCollection);
             });
+        });
+
+        template.autorun(function(c) {
+            c.stop();
+            var controller = Iron.controller();
+            var hash = controller.getParams().hash;
+            if (hash) {
+                template.onMessageClick({
+                    searching: true,
+                    message: {
+                        _id: hash
+                    }
+                });
+            }
         });
     };
 });
@@ -135,7 +149,8 @@ Template.NetworkChat.helpers({
                     placeholderText: TAPi18n.__('pages-app-network-chat-empty-placeholder'),
                     reactiveMessages: template.reactiveMessages,
                     reactiveHighlight:  template.searchQuery,
-                    reactiveBottomBarHeight: template.bottomBarHeight
+                    reactiveBottomBarHeight: template.bottomBarHeight,
+                    onClearContext: template.throttledSetSearchQuery
                 };
             },
             bottomBar: function() {
