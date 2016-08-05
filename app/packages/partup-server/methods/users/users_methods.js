@@ -311,5 +311,24 @@ Meteor.methods({
             Log.error(error);
             throw new Meteor.Error(400, 'network_chat_could_not_be_inserted');
         }
+    },
+
+    /**
+     * Order set of parners by occurrence
+     * @param userId
+     * @param partners
+     */
+    'users.order_partners': function(userId, partners) {
+        check(userId, String);
+        check(partners, [Object]);
+
+        var upper = Meteor.users.findOne(userId);
+        var upperPartups = upper.upperOf || [];
+
+        partners.forEach(function(partner) {
+           partner.partner_count = lodash.intersection(upperPartups, partner.upperOf).length;
+        });
+
+        return lodash.sortByOrder(partners, ['partner_count', 'participation_score'], ['desc', 'desc']);
     }
 });

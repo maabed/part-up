@@ -90,20 +90,22 @@ Template.app_profile_partners.onCreated(function() {
                 return;
             }
 
-            var result = response.data;
-            template.states.pagingEndReached.set(result.users.length < PAGING_INCREMENT);
+            var unorderedResult = response.data.users;
+            Meteor.call('users.order_partners', template.data.profileId, unorderedResult, function(error, result) {
+                template.states.pagingEndReached.set(result.length < PAGING_INCREMENT);
 
-            var tiles = result.users.map(function(user) {
-                Partup.client.embed.user(user, result['cfs.images.filerecord']);
+                var tiles = result.map(function(user) {
+                    Partup.client.embed.user(user, result['cfs.images.filerecord']);
 
-                return {
-                    user: user
-                };
-            });
+                    return {
+                        user: user
+                    };
+                });
 
-            // Add tiles to the column layout
-            template.columnTilesLayout.addTiles(tiles, function callback() {
-                template.states.loadingInfiniteScroll = false;
+                // Add tiles to the column layout
+                template.columnTilesLayout.addTiles(tiles, function callback() {
+                    template.states.loadingInfiniteScroll = false;
+                });
             });
         });
     });

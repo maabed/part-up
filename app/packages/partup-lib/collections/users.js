@@ -218,8 +218,8 @@ Meteor.users.findSupportersForPartup = function(partup) {
  * @return {Mongo.Cursor}
  */
 Meteor.users.findPartnersForUpper = function(upper, options, sortingOptions) {
-    var options = options || {};
-    var sortingOptions = sortingOptions || {};
+    options = options || {};
+    sortingOptions = sortingOptions || {};
     var upper_partups = upper.upperOf || [];
     var upper_partners = [];
 
@@ -240,11 +240,18 @@ Meteor.users.findPartnersForUpper = function(upper, options, sortingOptions) {
         .pull(upper._id)
         .value();
 
-    // this exception is for the profile/:id/partners
+    // this exception is for the profile/:id/partners route
     if (sortingOptions.sortByPartnerFrequency) {
         partners.sort(function(a, b) {
             if (upperCount[a] < upperCount[b]) return 1;
             if (upperCount[a] > upperCount[b]) return -1;
+
+            // If the count is the same, order by participation score
+            var userAScore = Meteor.users.findSinglePublicProfile(a).fetch()[0].participation_score;
+            var userBScore = Meteor.users.findSinglePublicProfile(b).fetch()[0].participation_score;
+            if (userAScore < userBScore) return 1;
+            if (userAScore > userBScore) return -1;
+
             return 0;
         });
         if (options && options.limit) {
